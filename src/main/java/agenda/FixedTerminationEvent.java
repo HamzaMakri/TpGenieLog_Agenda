@@ -3,6 +3,7 @@ package agenda;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.chrono.ChronoLocalDate;
 import java.time.temporal.ChronoUnit;
 
 /**
@@ -30,9 +31,8 @@ public class FixedTerminationEvent extends RepetitiveEvent {
      */
     public FixedTerminationEvent(String title, LocalDateTime start, Duration duration, ChronoUnit frequency, LocalDate terminationInclusive) {
          super(title, start, duration, frequency);
-         this.terminationInclusive=terminationInclusive;
         // TODO : implémenter cette méthode
-        throw new UnsupportedOperationException("Pas encore implémenté");
+        this.terminationInclusive=terminationInclusive;
     }
 
     /**
@@ -51,9 +51,8 @@ public class FixedTerminationEvent extends RepetitiveEvent {
      */
     public FixedTerminationEvent(String title, LocalDateTime start, Duration duration, ChronoUnit frequency, long numberOfOccurrences) {
         super(title, start, duration, frequency);
+        // DONE : implémenter cette méthode
         this.numberOfOccurrences=numberOfOccurrences;
-        // TODO : implémenter cette méthode
-        throw new UnsupportedOperationException("Pas encore implémenté");
     }
 
     /**
@@ -61,11 +60,17 @@ public class FixedTerminationEvent extends RepetitiveEvent {
      * @return the termination date of this repetitive event
      */
     public LocalDate getTerminationDate() {
-        // TODO : implémenter cette méthode
-        throw new UnsupportedOperationException("Pas encore implémenté");   
+        // DONE : implémenter cette méthode
+        return this.terminationInclusive;
     }
 
     public long getNumberOfOccurrences() {
+        // DONE : implémenter cette méthode
+        return this.numberOfOccurrences;
+    }
+
+    @Override
+    public boolean isInDay(LocalDate aDay) {
         // TODO : implémenter cette méthode
         throw new UnsupportedOperationException("Pas encore implémenté");
     }

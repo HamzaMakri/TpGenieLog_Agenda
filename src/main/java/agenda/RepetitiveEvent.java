@@ -1,5 +1,7 @@
 package agenda;
 
+import java.time.chrono.ChronoLocalDate;
+import java.time.chrono.ChronoLocalDateTime;
 import java.util.*;
 import java.time.*;
 import java.time.temporal.ChronoUnit;
@@ -10,6 +12,7 @@ import java.time.temporal.ChronoUnit;
 public class RepetitiveEvent extends Event {
     
         private ChronoUnit frequency;
+        public ArrayList<LocalDate> exceptions;
 
     /**
      * Constructs a repetitive event
@@ -26,9 +29,9 @@ public class RepetitiveEvent extends Event {
      */
     public RepetitiveEvent(String title, LocalDateTime start, Duration duration, ChronoUnit frequency) {
         super(title, start, duration);
-        this.frequency=frequency;
-        // TODO : implémenter cette méthode
-        throw new UnsupportedOperationException("Pas encore implémenté");
+        // DONE : implémenter cette méthode
+        this.frequency = frequency;
+        this.exceptions = new ArrayList<>();
     }
 
     /**
@@ -37,8 +40,8 @@ public class RepetitiveEvent extends Event {
      * @param date the event will not occur at this date
      */
     public void addException(LocalDate date) {
-        // TODO : implémenter cette méthode
-        throw new UnsupportedOperationException("Pas encore implémenté");
+        // DONE : implémenter cette méthode
+        exceptions.add(date);
     }
 
     /**
@@ -46,8 +49,39 @@ public class RepetitiveEvent extends Event {
      * @return the type of repetition
      */
     public ChronoUnit getFrequency() {
-        // TODO : implémenter cette méthode
-        throw new UnsupportedOperationException("Pas encore implémenté");    
+        // DONE : implémenter cette méthode
+        return this.frequency;
     }
+
+    @Override
+    public boolean isInDay(LocalDate aDay) {
+        // DONE : implémenter cette méthode
+
+        if (exceptions.contains(aDay)){
+            return false;
+        } else if (aDay.isEqual(ChronoLocalDate.from(getStart()))){
+            return true;
+        } else if (aDay.isAfter(ChronoLocalDate.from(getStart()))) {
+            LocalDateTime testing_date = getStart();
+            while (testing_date.isBefore(ChronoLocalDateTime.from(aDay.plusDays(1).atStartOfDay()))) {
+                if (aDay.isEqual(ChronoLocalDate.from(testing_date))) {
+                    return true;
+                }
+                switch (getFrequency()) {
+                    case DAYS:
+                        testing_date = testing_date.plusDays(1);
+                        break;
+                    case WEEKS:
+                        testing_date = testing_date.plusWeeks(1);
+                        break;
+                    case YEARS:
+                        testing_date = testing_date.plusYears(1);
+                        break;
+                }
+            }
+        }
+        return false;
+    }
+
 
 }
