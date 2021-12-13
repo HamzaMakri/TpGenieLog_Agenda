@@ -1,6 +1,7 @@
 package agenda;
 
 import java.time.*;
+import java.time.chrono.ChronoLocalDate;
 
 public class Event {
 
@@ -41,7 +42,8 @@ public class Event {
      */
     public boolean isInDay(LocalDate aDay) {
         // TODO : implémenter cette méthode
-        throw new UnsupportedOperationException("Pas encore implémenté");
+        LocalDateTime fin = myStart.plus(myDuration);
+        return (aDay.isBefore(ChronoLocalDate.from(fin)) && aDay.isAfter(ChronoLocalDate.from(myStart)));
     }
    
     /**
@@ -66,6 +68,5 @@ public class Event {
         return myDuration;
     }
 
-   
     
 }

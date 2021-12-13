@@ -33,7 +33,6 @@ public class FixedTerminationEvent extends RepetitiveEvent {
          this.terminationInclusive=terminationInclusive;
         // TODO : implémenter cette méthode
         throw new UnsupportedOperationException("Pas encore implémenté");
-
     }
 
     /**
