@@ -72,7 +72,7 @@ public class FixedTerminationEvent extends RepetitiveEvent {
                 default:
                     throw new IllegalStateException(" Invalid frequency : " + getFrequency() + " it must either be DAYS, WEEKS or YEARS");
 
-            }
+    }
     }
 
     public long getNumberOfOccurrences() {
@@ -87,7 +87,7 @@ public class FixedTerminationEvent extends RepetitiveEvent {
             default:
                 throw new IllegalStateException(" Invalid frequency : " + getFrequency() + " it must either be DAYS, WEEKS or YEARS");
 
-        }
+    }
     }
         
 }

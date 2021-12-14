@@ -47,6 +47,7 @@ public class EventTest {
     }
     @Test
     public void toStringShowsEventTitle() {
+        System.out.println(simple.toString());
         assertTrue(simple.toString().contains("Simple event"), "toString() doit montrer le titre de l'événements");
     }
     

@@ -72,5 +72,5 @@ public class Event {
     public String toString(){
         return "Event => " + getTitle() + "\n\tBeginning : " + getStart().toString() + "\n\tDuration : " +  getDuration().toString() ;
     }
-
+    
 }
