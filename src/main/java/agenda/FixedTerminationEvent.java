@@ -61,13 +61,33 @@ public class FixedTerminationEvent extends RepetitiveEvent {
      * @return the termination date of this repetitive event
      */
     public LocalDate getTerminationDate() {
-        // TODO : implémenter cette méthode
-        throw new UnsupportedOperationException("Pas encore implémenté");   
+        // DONE : implémenter cette méthode
+            switch (getFrequency()){
+                case DAYS:
+                    return LocalDate.from(getStart().plusDays(numberOfOccurrences-1));
+                case WEEKS:
+                    return LocalDate.from(getStart().plusWeeks(numberOfOccurrences-1));
+                case YEARS:
+                    return LocalDate.from(getStart().plusYears(numberOfOccurrences-1));
+                default:
+                    throw new IllegalStateException(" Invalid frequency : " + getFrequency() + " it must either be DAYS, WEEKS or YEARS");
+
+            }
     }
 
     public long getNumberOfOccurrences() {
-        // TODO : implémenter cette méthode
-        throw new UnsupportedOperationException("Pas encore implémenté");
+        // DONE : implémenter cette méthode
+        switch (getFrequency()){
+            case DAYS:
+                return ChronoUnit.DAYS.between(getStart(), terminationInclusive.atStartOfDay()) + 1;
+            case WEEKS:
+                return ChronoUnit.WEEKS.between(getStart(), terminationInclusive.atStartOfDay()) + 1;
+            case YEARS:
+                return ChronoUnit.MONTHS.between(getStart(), terminationInclusive.atStartOfDay()) + 1;
+            default:
+                throw new IllegalStateException(" Invalid frequency : " + getFrequency() + " it must either be DAYS, WEEKS or YEARS");
+
+        }
     }
         
 }
