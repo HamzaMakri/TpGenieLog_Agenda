@@ -1,9 +1,11 @@
 package agenda;
 
+
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.chrono.ChronoLocalDate;
+import java.time.chrono.ChronoLocalDateTime;
 import java.time.temporal.ChronoUnit;
 
 /**
@@ -11,7 +13,7 @@ import java.time.temporal.ChronoUnit;
  * a given number of occurrences
  */
 public class FixedTerminationEvent extends RepetitiveEvent {
-    
+
     private LocalDate terminationInclusive;
     private long numberOfOccurrences;
 
@@ -31,7 +33,7 @@ public class FixedTerminationEvent extends RepetitiveEvent {
      */
     public FixedTerminationEvent(String title, LocalDateTime start, Duration duration, ChronoUnit frequency, LocalDate terminationInclusive) {
          super(title, start, duration, frequency);
-        // TODO : implémenter cette méthode
+        // DONE : implémenter cette méthode
         this.terminationInclusive=terminationInclusive;
     }
 
@@ -61,18 +63,63 @@ public class FixedTerminationEvent extends RepetitiveEvent {
      */
     public LocalDate getTerminationDate() {
         // DONE : implémenter cette méthode
-        return this.terminationInclusive;
+            switch (getFrequency()){
+                case DAYS:
+                    return LocalDate.from(getStart().plusDays(numberOfOccurrences-1));
+                case WEEKS:
+                    return LocalDate.from(getStart().plusWeeks(numberOfOccurrences-1));
+                case YEARS:
+                    return LocalDate.from(getStart().plusYears(numberOfOccurrences-1));
+                default:
+                    throw new IllegalStateException(" Invalid frequency : " + getFrequency() + " it must either be DAYS, WEEKS or YEARS");
+
+            }
     }
 
     public long getNumberOfOccurrences() {
         // DONE : implémenter cette méthode
-        return this.numberOfOccurrences;
+        switch (getFrequency()){
+            case DAYS:
+                return ChronoUnit.DAYS.between(getStart(), terminationInclusive.atStartOfDay()) + 1;
+            case WEEKS:
+                return ChronoUnit.WEEKS.between(getStart(), terminationInclusive.atStartOfDay()) + 1;
+            case YEARS:
+                return ChronoUnit.MONTHS.between(getStart(), terminationInclusive.atStartOfDay()) + 1;
+            default:
+                throw new IllegalStateException(" Invalid frequency : " + getFrequency() + " it must either be DAYS, WEEKS or YEARS");
+
+        }
     }
+
 
     @Override
     public boolean isInDay(LocalDate aDay) {
-        // TODO : implémenter cette méthode
-        throw new UnsupportedOperationException("Pas encore implémenté");
+        // DONE : implémenter cette méthode
+
+        if (exceptions.contains(aDay)){
+            return false;
+        } else if (aDay.isEqual(ChronoLocalDate.from(getStart()))){
+            return true;
+        } else if (aDay.isAfter(ChronoLocalDate.from(getStart()))) {
+            LocalDateTime testing_date = getStart();
+            while (testing_date.isBefore(ChronoLocalDateTime.from(aDay.plusDays(1).atStartOfDay())) ) {
+                if (aDay.isEqual(ChronoLocalDate.from(testing_date))) {
+                    return true;
+                }
+                switch (getFrequency()) {
+                    case DAYS:
+                        testing_date = testing_date.plusDays(1);
+                        break;
+                    case WEEKS:
+                        testing_date = testing_date.plusWeeks(1);
+                        break;
+                    case YEARS:
+                        testing_date = testing_date.plusYears(1);
+                        break;
+                }
+            }
+        }
+        return false;
     }
-        
+
 }

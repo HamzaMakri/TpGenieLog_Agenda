@@ -43,9 +43,7 @@ public class Event {
     public boolean isInDay(LocalDate aDay) {
         // DONE : implémenter cette méthode
         LocalDateTime end = myStart.plus(myDuration);
-        System.out.println(aDay.isBefore(ChronoLocalDate.from(end)));
-        System.out.println(aDay.isAfter(ChronoLocalDate.from(myStart)));
-        return (    (aDay.isBefore(ChronoLocalDate.from(end)) && aDay.isAfter(ChronoLocalDate.from(myStart))) || aDay.isEqual(ChronoLocalDate.from(myStart))  || aDay.isEqual(ChronoLocalDate.from(end))        );
+        return (    ( aDay.isBefore(ChronoLocalDate.from(end)) && aDay.isAfter(ChronoLocalDate.from(myStart)) ) || aDay.isEqual(ChronoLocalDate.from(myStart))  || aDay.isEqual(ChronoLocalDate.from(end))        );
     }
    
     /**
