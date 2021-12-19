@@ -64,7 +64,8 @@ public class RepetitiveEvent extends Event {
         } else if (aDay.isAfter(ChronoLocalDate.from(getStart()))) {
             LocalDateTime testing_date = getStart();
             while (testing_date.isBefore(ChronoLocalDateTime.from(aDay.plusDays(1).atStartOfDay()))) {
-                if (aDay.isEqual(ChronoLocalDate.from(testing_date))) {
+                LocalDateTime end = testing_date.plus(getDuration());
+                if (( aDay.isBefore(ChronoLocalDate.from(end)) && aDay.isAfter(ChronoLocalDate.from(testing_date)) ) || aDay.isEqual(ChronoLocalDate.from(testing_date))  || aDay.isEqual(ChronoLocalDate.from(end))) {
                     return true;
                 }
                 switch (getFrequency()) {

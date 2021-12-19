@@ -35,6 +35,7 @@ public class FixedTerminationEvent extends RepetitiveEvent {
          super(title, start, duration, frequency);
         // DONE : implémenter cette méthode
         this.terminationInclusive=terminationInclusive;
+        this.numberOfOccurrences = getNumberOfOccurrences();
     }
 
     /**
@@ -55,6 +56,7 @@ public class FixedTerminationEvent extends RepetitiveEvent {
         super(title, start, duration, frequency);
         // DONE : implémenter cette méthode
         this.numberOfOccurrences=numberOfOccurrences;
+        this.terminationInclusive = getTerminationDate();
     }
 
     /**
@@ -72,7 +74,6 @@ public class FixedTerminationEvent extends RepetitiveEvent {
                     return LocalDate.from(getStart().plusYears(numberOfOccurrences-1));
                 default:
                     throw new IllegalStateException(" Invalid frequency : " + getFrequency() + " it must either be DAYS, WEEKS or YEARS");
-
             }
     }
 
@@ -96,30 +97,13 @@ public class FixedTerminationEvent extends RepetitiveEvent {
     public boolean isInDay(LocalDate aDay) {
         // DONE : implémenter cette méthode
 
-        if (exceptions.contains(aDay)){
+
+        if (aDay.isAfter(getTerminationDate())){
             return false;
-        } else if (aDay.isEqual(ChronoLocalDate.from(getStart()))){
-            return true;
-        } else if (aDay.isAfter(ChronoLocalDate.from(getStart()))) {
-            LocalDateTime testing_date = getStart();
-            while (testing_date.isBefore(ChronoLocalDateTime.from(aDay.plusDays(1).atStartOfDay())) ) {
-                if (aDay.isEqual(ChronoLocalDate.from(testing_date))) {
-                    return true;
-                }
-                switch (getFrequency()) {
-                    case DAYS:
-                        testing_date = testing_date.plusDays(1);
-                        break;
-                    case WEEKS:
-                        testing_date = testing_date.plusWeeks(1);
-                        break;
-                    case YEARS:
-                        testing_date = testing_date.plusYears(1);
-                        break;
-                }
-            }
+        }else{
+            return super.isInDay(aDay);
         }
-        return false;
     }
+
 
 }
