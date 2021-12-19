@@ -81,7 +81,7 @@ public class Agenda {
         for (LocalDate day : daysOfEvent) {
             eventsAtDaysOfE.addAll(eventsInDay(day));
         }
-
+        
         for (Event current_event : eventsAtDaysOfE) {  // eventsAtDaysOfE = la liste des evenement ayant lieu le même jour que l'evenement
 
             if (current_event.getStart().toLocalTime().isAfter(current_event.getStart().plus(current_event.getDuration()).toLocalTime()) && current_event.getDuration().compareTo(Duration.ofDays(1)) > 0   ){ // si un evenement empiete sur le jour suivant et qu'il ne dure pas plus d'un jour

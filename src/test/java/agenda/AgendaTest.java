@@ -77,7 +77,7 @@ public class AgendaTest {
     @Test
     public void testIsFreeFor(){
         Event event1 = new Event("Simple event", LocalDateTime.of(2000, 11, 1, 22, 30), min_120);
-        Event event2 = new Event("Simple event", LocalDateTime.of(2020, 11, 6, 21, 30), min_120);
+        Event event2 = new Event("Simple event", LocalDateTime.of(2020, 11, 8, 21, 30), min_120);
         Event event3 = new Event("Simple event", LocalDateTime.of(2021, 7, 6, 0, 7), min_120);
         Event event4 = new Event("Simple event", LocalDateTime.of(2020, 11, 6, 23, 30), Duration.ofMinutes(10));
         Event event5 = new Event("Simple event", LocalDateTime.of(2022, 3, 7, 6, 56), Duration.ofMinutes(180));
